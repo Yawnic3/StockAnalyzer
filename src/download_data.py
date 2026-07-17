@@ -4,8 +4,7 @@ import pandas as pd
 import yfinance as yf
 
 
-TICKERS = ["AAPL", "MSFT", "NVDA", "AMD", "GOOGL"]
-OUTPUT_PATH = Path("data/prices.csv")
+
 
 
 def download_stock(symbol: str) -> pd.DataFrame:

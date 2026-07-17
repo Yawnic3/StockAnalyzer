@@ -1,6 +1,12 @@
+from matplotlib.path import Path
 import numpy as np
 import pandas as pd
 from download_data import download_stock
+
+TICKERS = ["AAPL", "MSFT", "NVDA", "AMD", "GOOGL"]
+OUTPUT_PATH = Path("data/prices.csv")
+
+def analyze_stock(symbol: str) -> pd.DataFrame:
 
 def main() -> None:
     OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
@@ -17,8 +23,8 @@ def main() -> None:
     prices.to_csv(OUTPUT_PATH, index=False)
 
     print(f"\nSaved {len(prices):,} rows to {OUTPUT_PATH}")
-    print(prices.tail())
 
+    
 
 if __name__ == "__main__":
     main()
