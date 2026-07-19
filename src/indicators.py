@@ -7,6 +7,12 @@ REQUIRED_COLUMNS = {
     "volume",
 }
 
+def calculate_return_1d(df: pd.DataFrame) -> pd.Series:
+    """
+    Calculate the percentage price change from the previous trading day"""
+    return df["close"].pct_change()
+
+
 def calculate_indicators(stock_data: pd.DataFrame) -> dict:
     """
     Calculate technical indicators for one stock.
@@ -33,3 +39,8 @@ def calculate_indicators(stock_data: pd.DataFrame) -> dict:
     result = result.sort_values(by=["symbol", "date"],).reset_index(drop=True)
 
     grouped = result.groupby("symbol", group_keys=False)
+
+    result["return_1d"] = grouped.apply(
+        lambda stock: calculate_return_1d(stock),
+        include_groups = False,
+    ).reset_index(level=0, drop=True)
