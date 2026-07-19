@@ -29,3 +29,7 @@ def calculate_indicators(stock_data: pd.DataFrame) -> dict:
         raise ValueError("Input stock_data is empty")
     
     result = stock_data.copy()
+
+    result = result.sort_values(by=["symbol", "date"],).reset_index(drop=True)
+
+    grouped = result.groupby("symbol", group_keys=False)
