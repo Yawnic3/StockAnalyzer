@@ -21,3 +21,11 @@ def calculate_indicators(stock_data: pd.DataFrame) -> dict:
         raise ValueError("Input stock_data is empty")
     
     missing_columns = REQUIRED_COLUMNS - set(stock_data.columns)
+
+    if missing_columns:
+        raise ValueError(f"Missing required columns: {sorted(missing_columns)}")
+    
+    if stock_data.empty:
+        raise ValueError("Input stock_data is empty")
+    
+    result = stock_data.copy()
