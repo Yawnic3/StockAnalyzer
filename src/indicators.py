@@ -12,6 +12,10 @@ def calculate_return_1d(df: pd.DataFrame) -> pd.Series:
     Calculate the percentage price change from the previous trading day"""
     return df["close"].pct_change()
 
+def calculate_momentum_20d(df: pd.DataFrame) -> pd.Series:
+    """
+    Calculate the percentage price change over the previous 20 trading days"""
+    return df["close"].pct_change(periods=20)
 
 def calculate_indicators(stock_data: pd.DataFrame) -> dict:
     """
