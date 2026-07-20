@@ -4,6 +4,7 @@ import numpy as np
 
 REQUIRED_COLUMNS = {
     "date",
+    "symbol",
     "close",
     "volume",
 }
@@ -73,7 +74,7 @@ def calculate_stock_score(df: pd.DataFrame) -> pd.Series:
 
     return score.clip(lower=0, upper=100)
 
-def calculate_indicators(stock_data: pd.DataFrame) -> dict:
+def calculate_indicators(stock_data: pd.DataFrame) -> pd.DataFrame:
     """
     Calculate technical indicators for one stock.
     
@@ -91,8 +92,6 @@ def calculate_indicators(stock_data: pd.DataFrame) -> dict:
     if missing_columns:
         raise ValueError(f"Missing required columns: {sorted(missing_columns)}")
     
-    if stock_data.empty:
-        raise ValueError("Input stock_data is empty")
     
     result = stock_data.copy()
 
@@ -113,3 +112,23 @@ def calculate_indicators(stock_data: pd.DataFrame) -> dict:
     result["ma_20"] = grouped["close"].transform(
         lambda prices: prices.rolling(window=20).mean()
     )
+
+    result["ma_50"] = grouped["close"].transform(
+        lambda prices: prices.rolling(window=50).mean()
+    )
+    
+    result["volatility_20d"] = grouped["close"].transform(
+        lambda prices: (
+            prices.pct_change().rolling(window=20).std() * math.sqrt(252)
+        )
+    )
+
+    result["volume_strength"] = grouped["volume"].transform(
+        lambda volumes: (
+            volumes / volumes.rolling(window=20).mean().replace(0, np.nan)
+        )
+    )
+
+    result["stock_score"] = calculate_stock_score(result)
+
+    return result
