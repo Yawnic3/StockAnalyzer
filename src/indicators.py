@@ -27,6 +27,16 @@ def calculate_volatility(df: pd.DataFrame, window: int = 20) -> pd.Series:
     daily_returns = df["close"].pct_change()
     return daily_returns.rolling(window=window).std() * math.sqrt(252)
 
+def calculate_volume_strength(df: pd.DataFrame, window: int = 20,) -> pd.Series:
+    """Calculate today's volume to the average volume over the previous window
+    A value of:
+        1.0 means normal value
+        1.5 means 50% above average
+        0.5 means 50% below average"""
+    
+    average_volume = df["volume"].rolling(window=window).mean()
+    return df["volume"] / average_volume.replace(0, np.nan)
+
 def calculate_stock_score(df: pd.DataFrame) -> pd.Series:
     """
     Calculate a simple stock score from 0 to 100.
