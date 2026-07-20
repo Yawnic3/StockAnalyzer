@@ -1,5 +1,6 @@
 import math
 import pandas as pd
+import numpy as np
 
 REQUIRED_COLUMNS = {
     "date",
@@ -16,6 +17,51 @@ def calculate_momentum_20d(df: pd.DataFrame) -> pd.Series:
     """
     Calculate the percentage price change over the previous 20 trading days"""
     return df["close"].pct_change(periods=20)
+
+def calculate_moving_average(df: pd.DataFrame, window: int) -> pd.Series:
+    """Calculate a simply moving average of the closing price"""
+    return df["close"].rolling(window=window).mean()
+
+def calculate_volatility(df: pd.DataFrame, window: int = 20) -> pd.Series:
+    """Calculate the annualized volatility using daily returns"""
+    daily_returns = df["close"].pct_change()
+    return daily_returns.rolling(window=window).std() * math.sqrt(252)
+
+def calculate_stock_score(df: pd.DataFrame) -> pd.Series:
+    """
+    Calculate a simple stock score from 0 to 100.
+
+    Score components:
+        Trend:          30 points
+        Momentum:       30 points
+        Volume:         20 points
+        Low volatility: 20 points
+    """
+    score = pd.Series(0.0, index=df.index)
+
+    # Trend score: up to 30 points.
+    score += np.where(df["close"] > df["ma_20"], 15, 0)
+    score += np.where(df["ma_20"] > df["ma_50"], 15, 0)
+
+    # Momentum score: up to 30 points.
+    momentum_score = (df["momentum_20d"] * 300).clip(lower=0, upper=30)
+    score += momentum_score.fillna(0)
+
+    # Volume score: up to 20 points.
+    volume_score = ((df["volume_strength"] - 1) * 20 + 10).clip(
+        lower=0,
+        upper=20,
+    )
+    score += volume_score.fillna(0)
+
+    # Lower volatility receives a higher score.
+    volatility_score = (20 - df["volatility_20d"] * 50).clip(
+        lower=0,
+        upper=20,
+    )
+    score += volatility_score.fillna(0)
+
+    return score.clip(lower=0, upper=100)
 
 def calculate_indicators(stock_data: pd.DataFrame) -> dict:
     """
