@@ -104,3 +104,8 @@ def calculate_indicators(stock_data: pd.DataFrame) -> dict:
         lambda stock: calculate_return_1d(stock),
         include_groups = False,
     ).reset_index(level=0, drop=True)
+
+    result["momentum_20d"] = grouped.apply(
+        lambda stock: calculate_momentum_20d(stock),
+        include_groups = False,
+    ).reset_index(level=0, drop=True)
