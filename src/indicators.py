@@ -109,3 +109,7 @@ def calculate_indicators(stock_data: pd.DataFrame) -> dict:
         lambda stock: calculate_momentum_20d(stock),
         include_groups = False,
     ).reset_index(level=0, drop=True)
+
+    result["ma_20"] = grouped["close"].transform(
+        lambda prices: prices.rolling(window=20).mean()
+    )
