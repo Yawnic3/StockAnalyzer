@@ -195,7 +195,33 @@ The analyzer may raise an error when:
 * There is not enough historical data to calculate an indicator
 * The device has no internet connection
 
-Example:
+## Limitations
+
+This project is intended for educational and analytical purposes. Technical indicators are based on historical data and cannot reliably predict future stock performance.
+
+The overall score should not be treated as a recommendation to buy, sell, or hold a security.
+
+## Future Improvements
+
+Possible future features include:
+
+* A graphical user interface
+* Interactive stock charts
+* Support and resistance detection
+* Relative Strength Index
+* Moving Average Convergence Divergence
+* Bollinger Bands
+* Comparison of multiple stocks
+* Fundamental financial metrics
+* CSV and JSON report exports
+* Portfolio-level analysis
+* CUDA acceleration for large datasets
+* Machine-learning-based scoring
+
+## Disclaimer
+
+This software is provided for educational purposes only and does not constitute financial advice. Always conduct independent research and consult a qualified financial professional before making investment decisions.
+
 
 ```text
 RuntimeError: No data returned for INVALID
