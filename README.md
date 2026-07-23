@@ -220,7 +220,7 @@ Possible future features include:
 
 ## Disclaimer
 
-This software is provided for educational purposes only and does not constitute financial advice. Always conduct independent research and consult a qualified financial professional before making investment decisions.
+This software is provided for educational purposes only and does not constitute financial advice. Always conduct independent research and consult a qualified financial professional before making your investment decisions.
 
 
 ```text
