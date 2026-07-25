@@ -24,7 +24,6 @@ def main() -> None:
 
     print(f"\nSaved {len(prices):,} rows to {OUTPUT_PATH}")
 
-    
 
 if __name__ == "__main__":
     main()
