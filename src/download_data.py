@@ -5,7 +5,6 @@ import yfinance as yf
 
 
 
-
 def download_stock(symbol: str) -> pd.DataFrame:
     """Download two years of adjusted daily data for one stock."""
 
