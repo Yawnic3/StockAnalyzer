@@ -13,6 +13,7 @@ def analyze_stock(symbol: str) -> pd.DataFrame:
 
 
 
+
 def main() -> None:
     OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
 
